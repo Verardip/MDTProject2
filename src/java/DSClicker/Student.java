@@ -67,6 +67,9 @@ public class Student {
         // Get the current times and remove availability.
         ArrayList<String> currentTimes = tutorAvailability.get(className);
         currentTimes.remove(timeSlot);
+        
+        System.out.println(currentTimes.toString());
+        
         if (currentTimes.size() != 0)
             tutorAvailability.put(className, currentTimes);
         
@@ -76,6 +79,18 @@ public class Student {
             timeSlots = tutorScheduledAppointments.get(className);
         timeSlots.add(timeSlot);
         tutorScheduledAppointments.put(className, timeSlots);
+        
+        System.out.println(tutorScheduledAppointments.toString());
+    }
+    
+    
+    public void addTutoringSession(String className, String timeSlot)
+    {
+        ArrayList oneClassTutoringSessions = new ArrayList<>();
+        if (studentScheduledAppointments.containsKey(className))
+            oneClassTutoringSessions = studentScheduledAppointments.get(className);
+        oneClassTutoringSessions.add(timeSlot);
+        studentScheduledAppointments.put(className, oneClassTutoringSessions);
     }
     
     

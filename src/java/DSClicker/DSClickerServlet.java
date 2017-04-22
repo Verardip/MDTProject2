@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "DSClickerServlet",
-        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", "/tutor","/updateAvailability", "/requestTutoring"})
+        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", "/tutor","/updateAvailability", "/requestTutoring", "/bookTutoring"})
 public class DSClickerServlet extends HttpServlet {
 
     DSClickerModel dscModel = null;  // The "business model" for this app
@@ -131,8 +131,7 @@ public class DSClickerServlet extends HttpServlet {
             Map<String, ArrayList<Student>> availableTutors = dscModel.getAvailableStudents(subject);
             System.out.println(availableTutors.toString());
             
-            request.setAttribute("username", username);
-
+            request.setAttribute("username", username); 
             request.setAttribute("subject", subject);
             request.setAttribute("availableTutors", availableTutors.get(subject));
             RequestDispatcher view = request.getRequestDispatcher(nextView);
@@ -191,8 +190,28 @@ public class DSClickerServlet extends HttpServlet {
         {
             nextView = "TutorBookedSuccess.jsp";
             
+            String className = request.getParameter("className");
+            String tutorChoice = request.getParameter("tutorChoice");
+            String studentName = request.getParameter("username");
+            
+            int indexOfName = tutorChoice.indexOf(": ");
+            String tutorName = tutorChoice.substring(0, indexOfName);
+            String tutorTime = tutorChoice.substring(indexOfName+2);
+            
+            Student tutor = dscModel.students.get(tutorName.toLowerCase());
+            tutor.addScheduledAppointment(className, tutorTime);
+            
+            Student tutee = dscModel.students.get(studentName.toLowerCase());
+            tutee.addTutoringSession(className, tutorTime);
+            
+            System.out.println(className + ":" + tutorName + ":" + tutorTime + ":" + studentName);
 
-            // 
+            
+            request.setAttribute("tutorName2", initCaps(tutorName));
+            request.setAttribute("className2", className);
+            request.setAttribute("studentName2", initCaps(studentName));
+            request.setAttribute("tutorTime2", tutorTime);
+
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -241,6 +260,21 @@ public class DSClickerServlet extends HttpServlet {
         }
         
         return sb.toString();
+    }
+
+    
+    private static String initCaps(String notInitCaps)
+    {
+        String[] tokens = notInitCaps.split("\\s");
+        notInitCaps = "";
+
+        for (int i = 0; i < tokens.length; i++)
+        {
+            char capLetter = Character.toUpperCase(tokens[i].charAt(0));
+            notInitCaps +=  " " + capLetter + tokens[i].substring(1);
+        }
+        
+        return notInitCaps;
     }
 
 }

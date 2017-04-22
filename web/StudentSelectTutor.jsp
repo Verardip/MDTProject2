@@ -32,15 +32,15 @@
                     if (tutor.tutorAvailability.containsKey(className)){
                         ArrayList<String> times = tutor.tutorAvailability.get(className);
                         for (int j = 0; j < times.size(); j++){
-                            String rowItem = tutor.name + " " + times.get(j);
-                            %><input type="radio" name="subject" value="<%=rowItem%>"><%=rowItem%><br>
+                            String rowItem = tutor.name + ": " + times.get(j);
+                            %><input type="radio" name="tutorChoice" value="<%=rowItem%>"><%=rowItem%><br>
                         <% }%>
                                 <%
                         }
                     }
              %>
             <input type="hidden" name="className" value="<%= className %>" />
-            <input type="hidden" name="className" value="<%= username %>" />
+            <input type="hidden" name="username" value="<%= username %>" />
             
          
             <input type="submit" value="Submit" />
