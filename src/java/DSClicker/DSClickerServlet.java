@@ -31,7 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "DSClickerServlet",
-        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", "/tutor","/updateAvailability", "/requestTutoring", "/bookTutoring"})
+        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", 
+                        "/tutor","/updateAvailability", "/requestTutoring", 
+                        "/bookTutoring", "/requestTutorTime"})
 public class DSClickerServlet extends HttpServlet {
 
     DSClickerModel dscModel = null;  // The "business model" for this app
@@ -212,6 +214,27 @@ public class DSClickerServlet extends HttpServlet {
             request.setAttribute("studentName2", initCaps(studentName));
             request.setAttribute("tutorTime2", tutorTime);
 
+            RequestDispatcher view = request.getRequestDispatcher(nextView);
+            view.forward(request, response);
+        }
+        else if (requestSource.equals("/requestTutorTime"))
+        {
+            nextView = "TutorRequestSuccess.jsp";
+            
+            String studentName = request.getParameter("username");
+            String className = request.getParameter("className");
+            String startTime = request.getParameter("start_time");
+            String endTime = request.getParameter("end_time");
+            
+            String date = request.getParameter("date");
+            String fullTime = generateDateString(date, startTime, endTime);
+            
+            System.out.println(className + ":" + fullTime + ":" + studentName);
+            
+            request.setAttribute("className", className);
+            request.setAttribute("studentName", initCaps(studentName));
+            request.setAttribute("tutorTime", fullTime);
+            
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
