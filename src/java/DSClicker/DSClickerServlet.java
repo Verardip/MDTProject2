@@ -72,6 +72,7 @@ public class DSClickerServlet extends HttpServlet {
 
         if (requestSource.equals("/Login")){
             nextView = "Login.jsp";
+            request.setAttribute("notification", "fabvdg");
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -79,6 +80,10 @@ public class DSClickerServlet extends HttpServlet {
         if (requestSource.equals("/selection")){
             nextView = "Selection.jsp";
             request.setAttribute("username", username);
+            if (!DSClickerModel.students.containsKey(username.toLowerCase())){
+                nextView = "Login.jsp";
+                request.setAttribute("notification", "Invalid Username or Passwords");
+            }
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
