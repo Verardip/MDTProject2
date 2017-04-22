@@ -141,7 +141,7 @@
             </script>
             
             <script>
-                
+                // Simple method to select first radio button.
                 var allRadioButtons = document.getElementsByName("As");
                 allRadioButtons[0].checked = true;
                 
