@@ -48,7 +48,7 @@
         <br><br><br>
 
         <p>None of these times work for you? Select a time that does!</p>
-        <form action="updateAvailability" method="POST">
+        <form action="requestTutorTime" method="POST">
             
             <!--    Try inputting the Time Range in a fancy format here.
                     Documentation: https://jonthornton.github.io/Datepair.js/ -->
@@ -60,6 +60,8 @@
                     <input type="text" class="time start" name="start_time" id="start_time" /> to
                     <input type="text" class="time end" name="end_time" id="end_time" />
             </p>
+                        <input type="hidden" name="className" value="<%= className %>" />
+            <input type="hidden" name="username" value="<%= username %>" />
             
             <script>
                 var today = new Date();
@@ -95,12 +97,8 @@
             </script>
             
             <script>
-<<<<<<< Updated upstream
-                // Simple method to select first radio button.
-=======
                 // Simple utility to check first radio button.
->>>>>>> Stashed changes
-                var allRadioButtons = document.getElementsByName("As");
+                var allRadioButtons = document.getElementsByName("tutorChoice");
                 allRadioButtons[0].checked = true;
                 
                 
