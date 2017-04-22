@@ -20,68 +20,35 @@
     </head>
     
     <body>
-        <table>
+        <form action="bookTutoring" method="POST">
             <%
-                String className = (String)request.getAttribute("className");
+                String className = (String)request.getAttribute("subject");
+                String username = (String)request.getAttribute("username");
                 ArrayList<Student> availableTutors = (ArrayList<Student>) request.getAttribute("availableTutors");
                 //Map<String, ArrayList<Student>> availableTutors = (Map<String, ArrayList<Student>>)request.getAttribute("MapsOfStudents");
-            %>
-            <tr>
-                <th>Tutor</th>
-                <th>Available Tutor Times for <%=className%>.</th> 
-            </tr>
-            <%
-                Student student;
+                Student tutor;
                 for (int i = 0; i < availableTutors.size(); i++){
-                    student = availableTutors.get(i);
-                    if (student.tutorAvailability.containsKey(className)){
-                        ArrayList<String> times = student.tutorAvailability.get(className);
+                    tutor = availableTutors.get(i);
+                    if (tutor.tutorAvailability.containsKey(className)){
+                        ArrayList<String> times = tutor.tutorAvailability.get(className);
                         for (int j = 0; j < times.size(); j++){
-                            
+                            String rowItem = tutor.name + " " + times.get(j);
+                            %><input type="radio" name="subject" value="<%=rowItem%>"><%=rowItem%><br>
+                        <% }%>
+                                <%
                         }
                     }
-            }
-                    
-                    System.out.println(key);
-                    String keyForDisplay = key.replaceAll("_", " ");
-                    
-                    ArrayList<String> times = entry.getValue();
-                    for (int i = 0; i < times.size(); i++) {%>
-            <tr>
-                <td><%=keyForDisplay%></td>
-                <td><%=times.get(i)%></td>
-            </tr>
-            <%
-                    }
-                }
-            %>
-        </table>
+             %>
+            <input type="hidden" name="className" value="<%= className %>" />
+            <input type="hidden" name="className" value="<%= username %>" />
+            
+         
+            <input type="submit" value="Submit" />
+        </form>
         <br><br><br>
-        <table>
-            <%
-                Map<String, ArrayList<String>> scheduledAppointments = student.tutorScheduledAppointments;
-            %>
-            <tr>
-                <th>Classes</th>
-                <th>Scheduled Appointments</th> 
-            </tr>
-            <%for (Map.Entry<String, ArrayList<String>> entry : scheduledAppointments.entrySet()) {
-                    String key = entry.getKey();
-                    ArrayList<String> times = entry.getValue();
-                    for (int i = 0; i < times.size(); i++) {%>
-            <tr>
-                <td><%=key%></td>
-                <td><%=times.get(i)%></td>
-            </tr>
-            <%
-                    }
-                }
-            %>
-        </table>
-        <br><br>
+
         <p>None of these times work for you? Select a time that does!</p>
         <form action="updateAvailability" method="POST">
-            <input type="hidden" name="username" value="<%= student.name %>" />
             
             <!--    Try inputting the Time Range in a fancy format here.
                     Documentation: https://jonthornton.github.io/Datepair.js/ -->

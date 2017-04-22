@@ -25,7 +25,7 @@ public class DSClickerModel {
         Student s1 = new Student("Paul Verardi Data_Structures Calculus Chemistry Physics Accounting Distributed_Systems Managing_Disrupted_Techonology Java French");
         Student s2 = new Student("Andrew Lawson Computer_Science Calculus Chemistry Physics Economics NoSQL_Database Linux Marketing Management");
         Student s3 = new Student("Christopher Heywood History Calculus French Physics Finance Database_Management Data_Mining Java Python");
-        Student s4 = new Student("Theresa Froehlich Statistics Biology Spanish Physics Economics Government Data_Structures Astronomy Ethics");
+        Student s4 = new Student("Theresa Froehlich Statistics Biology Spanish Physics Economics Calculus Data_Structures Astronomy Ethics");
         
         ArrayList<String> times = new ArrayList<>();
         String time = "Wednesday, April 25 2017. 1:00 PM - 2:00 PM";
