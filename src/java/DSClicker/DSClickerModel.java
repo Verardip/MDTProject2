@@ -11,6 +11,7 @@ package DSClicker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 
@@ -50,4 +51,31 @@ public class DSClickerModel {
 
             
     }
+
+    public Map<String, ArrayList<Student>> getAvailableStudents(String className)
+    {
+        Map<String, ArrayList<Student>> availableStudentsForClass = new HashMap<String, ArrayList<Student>>();
+        ArrayList<Student> availableStudents = new ArrayList<Student>();
+        
+        // All Studeutsn
+        for (Entry student : students.entrySet())
+        {
+            Student tempStudent = (Student)student.getValue();
+            
+            // tutorAvailability is a map of <ClassName, ArrayList>.
+            for (Entry availability : tempStudent.tutorAvailability.entrySet())
+            {
+                if (availability.getKey().equals(className))
+                {  
+                    availableStudents.add(tempStudent);
+                }  
+            }
+        }
+        
+        availableStudentsForClass.put(className, availableStudents);
+        
+        return availableStudentsForClass;
+    }
+
+
 }

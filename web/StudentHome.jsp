@@ -43,12 +43,12 @@
         </table>
         <br><br>
         <p>Need more tutoring?</p>
-        <form action="requestTutoring" method="POST">
+        <form action="requestTutoring" method="GET">
             <%
                 ArrayList<String> currentClasses = student.currentClasses;
                 for (int i = 0; i < currentClasses.size(); i++) {
             %>
-            <input type="radio" name="As" value="<%=currentClasses.get(i)%>"><%=currentClasses.get(i).replace("_", " ")%><br>
+            <input type="radio" name="subject" value="<%=currentClasses.get(i)%>"><%=currentClasses.get(i).replace("_", " ")%><br>
             <% }%>
 
             <br>

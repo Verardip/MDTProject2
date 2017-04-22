@@ -17,7 +17,9 @@ package DSClicker;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -29,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "DSClickerServlet",
-        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", "/tutor","/updateAvailability"})
+        urlPatterns = {"/Login", "/selection", "/submit", "/getResults", "/tutor","/updateAvailability", "/requestTutoring"})
 public class DSClickerServlet extends HttpServlet {
 
     DSClickerModel dscModel = null;  // The "business model" for this app
@@ -119,6 +121,21 @@ public class DSClickerServlet extends HttpServlet {
                 view.forward(request, response);
             }    
         } 
+        
+        if (requestSource.equals("/requestTutoring"))
+        {
+            System.out.println("Someone requested tutoring.");
+            
+            nextView = "StudentSelectTutor.jsp";
+            String subject = request.getParameter("subject");
+            Map<String, ArrayList<Student>> availableTutors = dscModel.getAvailableStudents(subject);
+            System.out.println(availableTutors.toString());
+            
+            request.setAttribute("subject", subject);
+            request.setAttribute("availableTutors", availableTutors.get(subject));
+            RequestDispatcher view = request.getRequestDispatcher(nextView);
+            view.forward(request, response);
+        }
     }
     
     
