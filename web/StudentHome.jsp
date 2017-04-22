@@ -17,47 +17,89 @@
         <!-- Includes for external CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
         
+                        <!-- Style sheets for styling are imported via CDN. 
+             I used the popular Skeleton.css framework available via http://getskeleton.com/
+             This makes things look a bit nicer without adding much complexity.-->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+
+        <style>
+            * 
+            {
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: 300;
+                font-size: large;
+            }
+            
+            h4 
+            {
+                margin-top: 60px;
+                font-weight: 600;
+            }
+            
+            .radioText
+            {
+                margin-left: 10px;
+            }
+            
+            
+
+            
+            
+            .container { margin-top: 50px; }
+        </style>
+        
+        
     </head>
     
     <body>
-        <table>
-            <%
-                Student student = (Student) request.getAttribute("student");
-                Map<String, ArrayList<String>> scheduledAppointments = student.studentScheduledAppointments;
-            %>
-                <th>Classes</th>
-                <th>Scheduled Appointments</th> 
-            </tr>
-            <%for (Map.Entry<String, ArrayList<String>> entry : scheduledAppointments.entrySet()) {
-                    String key = entry.getKey();
-                    ArrayList<String> times = entry.getValue();
-                    for (int i = 0; i < times.size(); i++) {%>
-            <tr>
-                <td><%=key%></td>
-                <td><%=times.get(i)%></td>
-            </tr>
-            <%
-                    }
-                }
-            %>
-        </table>
-        <br><br>
-        <p>Need more tutoring?</p>
-        <form action="requestTutoring" method="GET">
-            <%
-                ArrayList<String> currentClasses = student.currentClasses;
-                for (int i = 0; i < currentClasses.size(); i++) {
-            %>
-            <input type="radio" name="subject" value="<%=currentClasses.get(i)%>"><%=currentClasses.get(i).replace("_", " ")%><br>
-            <% }%>
+        <div class="container">
 
-            <br>
-            </table>
-            <input type="hidden" name="username" value="<%= student.name %>" />
+            <h2>Welcome, Student!</h2>
             
-         
-            <input type="submit" value="Submit" />
-        </form>
+            <h4>Your booked appointments.</h4>
+            <table>
+                <%
+                    Student student = (Student) request.getAttribute("student");
+                    Map<String, ArrayList<String>> scheduledAppointments = student.studentScheduledAppointments;
+                %>
+                    <th>Classes</th>
+                    <th>Scheduled Appointments</th> 
+                </tr>
+                <%for (Map.Entry<String, ArrayList<String>> entry : scheduledAppointments.entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<String> times = entry.getValue();
+                        for (int i = 0; i < times.size(); i++) {%>
+                <tr>
+                    <td><%=key%></td>
+                    <td><%=times.get(i)%></td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </table>
+            
+            
+            <h4>Need more tutoring</h4>
+            <form action="requestTutoring" method="GET">
+                <p>Choose your class:</p>
+                <%
+                    ArrayList<String> currentClasses = student.currentClasses;
+                    for (int i = 0; i < currentClasses.size(); i++) {
+                %>
+                <input type="radio" name="subject" value="<%=currentClasses.get(i)%>"><span class="radioText"><%=currentClasses.get(i).replace("_", " ")%></span><br>
+                <% }%>
 
+                <br>
+                </table>
+                <input type="hidden" name="username" value="<%= student.name %>" />
+
+
+                <input type="submit" class="button-primary" value="Submit" />
+            </form>
+
+        </div>
     </body>
 </html>
