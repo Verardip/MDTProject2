@@ -19,6 +19,8 @@ public class DSClickerModel {
     public static boolean initAlready = false;
     
     public void populateStudentMap(){
+        System.out.println("populateStudentMap() called");
+        
         Student s1 = new Student("Paul Verardi Data_Structures Calculus Chemistry Physics Accounting Distributed_Systems Managing_Disrupted_Techonology Java French");
         Student s2 = new Student("Andrew Lawson Computer_Science Calculus Chemistry Physics Economics NoSQL_Database Linux Marketing Management");
         Student s3 = new Student("Christopher Heywood History Calculus French Physics Finance Database_Management Data_Mining Java Python");

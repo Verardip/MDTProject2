@@ -15,6 +15,11 @@
 package DSClicker;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -127,14 +132,15 @@ public class DSClickerServlet extends HttpServlet {
             nextView = "TutorHome.jsp";
             String userName = request.getParameter("username");
             String className = request.getParameter("As");
-            String weekday = request.getParameter("weekday");
-            String month = request.getParameter("month");
-            String dayOfMonth = request.getParameter("dayofmonth");
-            String year = request.getParameter("year");
-            String startTime = request.getParameter("starttime");
-            String endTime = request.getParameter("endtime");
-            String fullTime = weekday + ", " + month + " " + dayOfMonth + " " + year + ". " + startTime + " - " + endTime;
-            System.out.println("dsiufhdsaiufdhsaiufdha" + userName + className);
+            String startTime = request.getParameter("start_time");
+            String endTime = request.getParameter("end_time");
+            
+            String date = request.getParameter("date");
+            String fullTime = generateDateString(date, startTime, endTime);
+            System.out.println(fullTime);
+            
+            
+            System.out.println("Updated availability for " + userName + " and " + className);
             Student student = dscModel.students.get(userName.toLowerCase());
             request.setAttribute("student", student);
             student.updateAvailability(className, fullTime);
@@ -143,6 +149,49 @@ public class DSClickerServlet extends HttpServlet {
         }
         
         
+    }
+    
+    /**
+     * Private helper method to generate a date String in the form of "Wednesday, April 25 2017. 1:00 PM - 2:00 PM"
+     * @param date //  2017-04-23
+     * @param start_time // 1:00pm
+     * @param end_time // 2:00pm
+     * @return 
+     */
+    private static String generateDateString(String dateString, String start_time, String end_time)
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        try {
+            
+            SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = parser.parse(dateString);
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM dd YYYY. ");
+            String formattedDate = formatter.format(date);
+            
+            String startTimeNumeric = start_time.substring(0, start_time.length()-2);
+            String startTimeM = start_time.substring(start_time.length()-2).toUpperCase();
+            
+            String endTimeNumeric = end_time.substring(0, end_time.length()-2);
+            String endTimeM = end_time.substring(end_time.length()-2).toUpperCase();
+
+            sb.append(formattedDate);
+            sb.append(startTimeNumeric);
+            sb.append(" ");
+            sb.append(startTimeM);
+            sb.append(" - ");
+            sb.append(endTimeNumeric);
+            sb.append(" ");
+            sb.append(endTimeM);
+            
+        } 
+        catch (ParseException ex) 
+        {
+            Logger.getLogger(DSClickerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return sb.toString();
     }
 
 }
