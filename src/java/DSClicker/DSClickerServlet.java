@@ -77,6 +77,7 @@ public class DSClickerServlet extends HttpServlet {
 
         if (requestSource.equals("/Login")){
             nextView = "Login.jsp";
+            System.out.println("Test");
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
