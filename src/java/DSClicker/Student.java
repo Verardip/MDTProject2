@@ -59,6 +59,26 @@ public class Student {
         }
     }   
     
+    public void addScheduledAppointment(String className, String timeSlot)
+    {
+        if (tutorAvailability.containsKey(className) == false)
+            throw new IllegalArgumentException();
+        
+        // Get the current times and remove availability.
+        ArrayList<String> currentTimes = tutorAvailability.get(className);
+        currentTimes.remove(timeSlot);
+        if (currentTimes.size() != 0)
+            tutorAvailability.put(className, currentTimes);
+        
+        // Update the scheduled times.
+        ArrayList<String> timeSlots = new ArrayList<String>();
+        if (tutorScheduledAppointments.containsKey(className))
+            timeSlots = tutorScheduledAppointments.get(className);
+        timeSlots.add(timeSlot);
+        tutorScheduledAppointments.put(className, timeSlots);
+    }
+    
+    
     @Override
     public java.lang.String toString()
     {

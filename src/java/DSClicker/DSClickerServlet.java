@@ -131,6 +131,8 @@ public class DSClickerServlet extends HttpServlet {
             Map<String, ArrayList<Student>> availableTutors = dscModel.getAvailableStudents(subject);
             System.out.println(availableTutors.toString());
             
+            request.setAttribute("username", username);
+
             request.setAttribute("subject", subject);
             request.setAttribute("availableTutors", availableTutors.get(subject));
             RequestDispatcher view = request.getRequestDispatcher(nextView);
@@ -182,6 +184,15 @@ public class DSClickerServlet extends HttpServlet {
             Student student = dscModel.students.get(userName.toLowerCase());
             request.setAttribute("student", student);
             student.updateAvailability(className, fullTime);
+            RequestDispatcher view = request.getRequestDispatcher(nextView);
+            view.forward(request, response);
+        }
+        else if (requestSource.equals("/bookTutoring"))
+        {
+            nextView = "TutorBookedSuccess.jsp";
+            
+
+            // 
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
