@@ -35,9 +35,6 @@
                     System.out.println(key);
                     String keyForDisplay = key.replaceAll("_", " ");
                     
-                    // if (key.contains("_"))
-                    //     key = key.replaceAll("_", " ");
-                    
                     ArrayList<String> times = entry.getValue();
                     for (int i = 0; i < times.size(); i++) {%>
             <tr>
