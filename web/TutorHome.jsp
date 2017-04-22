@@ -130,7 +130,11 @@
             </script>
             
             <script>
+<<<<<<< Updated upstream
                 // Simple method to select first radio button.
+=======
+                // Simple utility to check first radio button.
+>>>>>>> Stashed changes
                 var allRadioButtons = document.getElementsByName("As");
                 allRadioButtons[0].checked = true;
                 
