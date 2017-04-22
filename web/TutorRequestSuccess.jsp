@@ -10,23 +10,64 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        
+        <!-- Style sheets for styling are imported via CDN. 
+             I used the popular Skeleton.css framework available via http://getskeleton.com/
+             This makes things look a bit nicer without adding much complexity.-->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+
+        <style>
+            * 
+            {
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: 300;
+                font-size: large;
+            }
+            
+            h4 
+            {
+                margin-top: 60px;
+                font-weight: 600;
+            }
+            
+            .radioText
+            {
+                margin-left: 10px;
+            }
+            
+            .className
+            {
+                font-weight: 600;
+            }
+
+            
+            
+            .container { margin-top: 50px; }
+        </style>
+        
+        
+        
     </head>
     <body>
-        <h1>Successfully requested a tutor time.</h1>
+        
+        <div class="container">
+        <h2>On your way!</h2>
         
             <%  
                 String studentName = (String)request.getAttribute("studentName");
-                String className = (String)request.getAttribute("className");
+                String className = ((String)request.getAttribute("className")).replace("_", " ");
                 String tutorTime = (String)request.getAttribute("tutorTime");
  
 
             %>
             
-            <%= studentName %>, you have requested your tutoring session in <%= className %> for <%= tutorTime %>!
-            <br>
+            <%= studentName %>, you have requested your tutoring session in <span class="className"><%= className %></span> for <em><%= tutorTime %></em>!
+            <br><br>
             We'll let all our tutors know that you need help.
             You'll receive a message when we confirmed your tutoring :)
-
+        </div>
         
     </body>
 </html>

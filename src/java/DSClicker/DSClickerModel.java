@@ -61,6 +61,7 @@ public class DSClickerModel {
         for (Entry student : students.entrySet())
         {
             Student tempStudent = (Student)student.getValue();
+            tempStudent.name = initCaps(tempStudent.name);
             
             // tutorAvailability is a map of <ClassName, ArrayList>.
             for (Entry availability : tempStudent.tutorAvailability.entrySet())
@@ -77,5 +78,22 @@ public class DSClickerModel {
         return availableStudentsForClass;
     }
 
+    private static String initCaps(String notInitCaps)
+    {
+        String[] tokens = notInitCaps.split("\\s");
+        notInitCaps = "";
 
+        for (int i = 0; i < tokens.length; i++)
+        {
+            char capLetter = Character.toUpperCase(tokens[i].charAt(0));
+            notInitCaps += "" + capLetter + tokens[i].substring(1);
+            notInitCaps += " ";
+        }
+        
+        return notInitCaps.substring(0, notInitCaps.length()-1);
+        
+        // return notInitCaps;
+    }
+    
+    
 }

@@ -132,10 +132,18 @@ public class DSClickerServlet extends HttpServlet {
             String subject = request.getParameter("subject");
             Map<String, ArrayList<Student>> availableTutors = dscModel.getAvailableStudents(subject);
             System.out.println(availableTutors.toString());
-            
+            ArrayList<Student> availableTutorsCaps = availableTutors.get(subject); 
+//            availableTutorsCaps = new ArrayList<Student>();
+//            for (Student s : availableTutors.get(subject))
+//            {
+//                Student tempStudent = s;
+//                tempStudent.name = initCaps(s.name);
+//                availableTutorsCaps.add(tempStudent);
+//            }
+                 
             request.setAttribute("username", username); 
             request.setAttribute("subject", subject);
-            request.setAttribute("availableTutors", availableTutors.get(subject));
+            request.setAttribute("availableTutors", availableTutorsCaps);
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -294,10 +302,12 @@ public class DSClickerServlet extends HttpServlet {
         for (int i = 0; i < tokens.length; i++)
         {
             char capLetter = Character.toUpperCase(tokens[i].charAt(0));
-            notInitCaps +=  " " + capLetter + tokens[i].substring(1);
+            notInitCaps += ""+ capLetter + tokens[i].substring(1);
+            notInitCaps += " ";
         }
         
-        return notInitCaps;
+        return notInitCaps.substring(0, notInitCaps.length()-1);
+        //return notInitCaps;
     }
 
 }
