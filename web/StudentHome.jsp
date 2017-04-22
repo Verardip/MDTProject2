@@ -52,66 +52,10 @@
             <% }%>
 
             <br>
-            </table>-->
+            </table>
             <input type="hidden" name="username" value="<%= student.name %>" />
             
-            <!--    Try inputting the Time Range in a fancy format here.
-                    Documentation: https://jonthornton.github.io/Datepair.js/ -->
-            <p id="basicExample">
-                <label for="date_input">Date</label>
-                    <input type="date" name="date" min="2017-04-01" max="2017-05-31" id="date_input"/>
-                
-                <label for="start_time">Time</label>
-                    <input type="text" class="time start" name="start_time" id="start_time" /> to
-                    <input type="text" class="time end" name="end_time" id="end_time" />
-            </p>
-            
-            <script>
-                var today = new Date();
-                var dd = today.getDate()+1;
-                var mm = today.getMonth()+1; //January is 0!
-                var yyyy = today.getFullYear();
-                if(dd<10) 
-                {
-                    dd='0'+dd
-                } 
-
-                if(mm<10) 
-                {
-                    mm='0'+mm
-                } 
-
-                
-                var date = yyyy+'-'+mm+'-'+dd;
-                document.getElementById("date_input").value = date;
-                
-                document.getElementById("start_time").value = "1:00PM";
-                document.getElementById("end_time").value = "2:00PM";
-    
-                // initialize input widgets first
-                $('#basicExample .time').timepicker({
-                    'showDuration': true,
-                    'timeFormat': 'g:ia'
-                });
-
-                // initialize datepair
-                var basicExampleEl = document.getElementById('basicExample');
-                var datepair = new Datepair(basicExampleEl);
-            </script>
-            
-            <script>
-<<<<<<< Updated upstream
-                // Simple method to select first radio button.
-=======
-                // Simple utility to check first radio button.
->>>>>>> Stashed changes
-                var allRadioButtons = document.getElementsByName("As");
-                allRadioButtons[0].checked = true;
-                
-                
-            </script>
-            
-            
+         
             <input type="submit" value="Submit" />
         </form>
 
