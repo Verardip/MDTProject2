@@ -31,10 +31,17 @@
             </tr>
             <%for (Map.Entry<String, ArrayList<String>> entry : availability.entrySet()) {
                     String key = entry.getKey();
+                    
+                    System.out.println(key);
+                    String keyForDisplay = key.replaceAll("_", " ");
+                    
+                    // if (key.contains("_"))
+                    //     key = key.replaceAll("_", " ");
+                    
                     ArrayList<String> times = entry.getValue();
                     for (int i = 0; i < times.size(); i++) {%>
             <tr>
-                <td><%=key%></td>
+                <td><%=keyForDisplay%></td>
                 <td><%=times.get(i)%></td>
             </tr>
             <%
@@ -71,28 +78,10 @@
                 ArrayList<String> earnedAs = student.classesEarnedA;
                 for (int i = 0; i < earnedAs.size(); i++) {
             %>
-            <input type="radio" name="As" value="<%=earnedAs.get(i)%>"><%=earnedAs.get(i)%><br>
+            <input type="radio" name="As" value="<%=earnedAs.get(i)%>"><%=earnedAs.get(i).replace("_", " ")%><br>
             <% }%>
 
             <br>
-<!--            <table>
-                <tr>
-                    <th><label for="weekday">Weekday</label></th>
-                    <th><label for="weekday">Month</label></th>
-                    <th><label for="weekday">Day of Month</label></th>
-                    <th><label for="weekday">Year</label></th>
-                    <th><label for="weekday">Start time</label></th>
-                    <th><label for="weekday">End time</label></th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="weekday" value="" /></td>
-                    <td><input type="text" name="month" value="" /></td>
-                    <td><input type="text" name="dayofmonth" value="" /></td>
-                    <td><input type="text" name="year" value="" /></td>
-                    <td><input type="text" name="starttime" value="" /></td>
-                    <td><input type="text" name="endtime" value="" /></td>
-                </tr>
-
             </table>-->
             <input type="hidden" name="username" value="<%= student.name %>" />
             
