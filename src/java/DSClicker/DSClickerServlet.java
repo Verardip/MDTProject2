@@ -90,15 +90,35 @@ public class DSClickerServlet extends HttpServlet {
         }
         
         if (requestSource.equals("/tutor")){
-            nextView = "TutorHome.jsp";
-            System.out.println("NAME IS :" + username);
-            username = username.toLowerCase();
-            Student student = dscModel.students.get(username);
-            System.out.println(student.name);
-            request.setAttribute("student", student);
-            RequestDispatcher view = request.getRequestDispatcher(nextView);
-            view.forward(request, response);
-        }
+            
+            
+            if(request.getParameter("intent").equals("I want to tutor!"))
+            {
+                System.out.println("Wants to tutor.");
+                
+                nextView = "TutorHome.jsp";
+                System.out.println("NAME IS :" + username);
+                username = username.toLowerCase();
+                Student student = dscModel.students.get(username);
+                System.out.println(student.name);
+                request.setAttribute("student", student);
+                RequestDispatcher view = request.getRequestDispatcher(nextView);
+                view.forward(request, response);
+            }
+            else if (request.getParameter("intent").equals("I need tutoring!"))
+            {
+                System.out.println("Needs tutoring.");
+                
+                nextView = "StudentHome.jsp";
+                System.out.println("NAME IS :" + username);
+                username = username.toLowerCase();
+                Student student = dscModel.students.get(username);
+                System.out.println(student.name);
+                request.setAttribute("student", student);
+                RequestDispatcher view = request.getRequestDispatcher(nextView);
+                view.forward(request, response);
+            }    
+        } 
     }
     
     

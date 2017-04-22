@@ -10,8 +10,8 @@
         
         <h3>What do you need today?</h3>
         <form action="tutor" method="GET">
-            <input type="submit" value="I want to tutor!" /><br>
-            <input type="submit" value="I need tutoring!" />
+            <input type="submit" value="I want to tutor!" name="intent" /><br>
+            <input type="submit" value="I need tutoring!" name="intent" />
             <input type="hidden" name="username" value="<%= request.getAttribute("username") %>" />
         </form>
     </body>
