@@ -33,8 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DSClickerServlet",
         urlPatterns = {"/Login", "/selection", "/submit", "/getResults", 
                         "/tutor","/updateAvailability", "/requestTutoring", 
-                        "/bookTutoring", "/requestTutorTime"})
+                        "/bookTutoring", "/requestTutorTime", "/acceptRequest"})
 public class DSClickerServlet extends HttpServlet {
+    public static ArrayList<String> studentRequests = new ArrayList<>();
 
     DSClickerModel dscModel = null;  // The "business model" for this app
     boolean initAlready = false;
@@ -105,6 +106,17 @@ public class DSClickerServlet extends HttpServlet {
                 username = username.toLowerCase();
                 Student student = dscModel.students.get(username);
                 System.out.println(student.name);
+                ArrayList<String> relevantRequests = new ArrayList<>();
+                
+                for (int a = 0; a < studentRequests.size(); a++){
+                    String tempRequest = studentRequests.get(a);
+                    String[] tempRequestData = tempRequest.split(": ");
+                    if (student.classesEarnedA.contains(tempRequestData[1])){
+                        String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
+                        relevantRequests.add(prettyRequest);
+                    }
+                }
+                request.setAttribute("studentRequests", relevantRequests);
                 request.setAttribute("student", student);
                 RequestDispatcher view = request.getRequestDispatcher(nextView);
                 view.forward(request, response);
@@ -238,11 +250,46 @@ public class DSClickerServlet extends HttpServlet {
             String fullTime = generateDateString(date, startTime, endTime);
             
             System.out.println(className + ":" + fullTime + ":" + studentName);
+            String studentRequest = studentName + ": " + className + ": " + fullTime;
+            System.out.println("studentRequest = " + studentRequest);
+            studentRequests.add(studentRequest);
             
             request.setAttribute("className", className);
             request.setAttribute("studentName", initCaps(studentName));
             request.setAttribute("tutorTime", fullTime);
             
+            RequestDispatcher view = request.getRequestDispatcher(nextView);
+            view.forward(request, response);
+        }
+        else if (requestSource.equals("/acceptRequest"))
+        {
+            nextView = "RequestAcceptConfirmation.jsp";
+            
+            String studentRequest = request.getParameter("studentRequests");
+            String tutorName = request.getParameter("username");
+            
+            String[] studentRequestData = studentRequest.split(": ");
+            String studentName = studentRequestData[0].toLowerCase();
+            String className = studentRequestData[1].replace(" ", "_");
+            String fullTime = studentRequestData[2];
+            
+            Student tutor = dscModel.students.get(tutorName.toLowerCase());
+            tutor.updateAvailability(className, fullTime);
+            tutor.addScheduledAppointment(className, fullTime);
+            
+            Student tutee = dscModel.students.get(studentName.toLowerCase());
+            tutee.addTutoringSession(className, fullTime);
+            
+            System.out.println(className + ":" + tutorName + ":" + fullTime + ":" + studentName);
+            
+            String requestToRemove = studentName + ": " + className + ": " + fullTime;
+
+            studentRequests.remove(requestToRemove);
+            request.setAttribute("tutorName2", initCaps(tutorName));
+            request.setAttribute("className2", className);
+            request.setAttribute("studentName2", initCaps(studentName));
+            request.setAttribute("tutorTime2", fullTime);
+
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -294,7 +341,7 @@ public class DSClickerServlet extends HttpServlet {
     }
 
     
-    private static String initCaps(String notInitCaps)
+    public static String initCaps(String notInitCaps)
     {
         String[] tokens = notInitCaps.split("\\s");
         notInitCaps = "";

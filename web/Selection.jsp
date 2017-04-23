@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="DSClicker.DSClickerServlet"%>
 
 <html>
     <head>
@@ -31,7 +32,9 @@
     </head>
     <body>
         <div class="container">
-            <p>Hello <%= request.getAttribute("username")%> ! </p>
+            <% String nameToDisplay = request.getAttribute("username").toString();
+               nameToDisplay = DSClickerServlet.initCaps(nameToDisplay);%>
+            <p>Hello <%= nameToDisplay %> ! </p>
 
             <h2>What do you need today?</h2>
             <form action="tutor" method="GET">

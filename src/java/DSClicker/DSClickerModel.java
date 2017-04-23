@@ -31,7 +31,7 @@ public class DSClickerModel {
         String time = "Wednesday, April 25 2017. 1:00 PM - 2:00 PM";
         times.add(time);
         System.out.println(times.get(0));
-        s1.tutorAvailability.put("Calculus", times);
+//        s1.tutorAvailability.put("Calculus", times);
         s1.tutorAvailability.put("Chemistry", times);
         
         ArrayList<String> scheduledtimes = new ArrayList<>();

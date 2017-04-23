@@ -57,41 +57,47 @@
     <body>
         <div class="container">
             <h2>Welcome, Tutor!</h2>
+        <%
+            Student student = (Student) request.getAttribute("student");
+            Map<String, ArrayList<String>> availability = student.tutorAvailability;
             
-            <h4>Available for tutoring</h4>
-            <table>
-                <%
-                    Student student = (Student) request.getAttribute("student");
-                    Map<String, ArrayList<String>> availability = student.tutorAvailability;
-                %>
-                <tr>
-                    <th>Classes</th>
-                    <th>Available Times</th> 
-                </tr>
-                <%for (Map.Entry<String, ArrayList<String>> entry : availability.entrySet()) {
-                        String key = entry.getKey();
+            if (!availability.isEmpty()){
+        %>            
+                <h4>Available for tutoring</h4>
+                <table>
 
-                        System.out.println(key);
-                        String keyForDisplay = key.replaceAll("_", " ");
+                    <tr>
+                        <th>Classes</th>
+                        <th>Available Times</th> 
+                    </tr>
+                    <%for (Map.Entry<String, ArrayList<String>> entry : availability.entrySet()) {
+                            String key = entry.getKey();
 
-                        ArrayList<String> times = entry.getValue();
-                        for (int i = 0; i < times.size(); i++) {%>
-                <tr>
-                    <td><%=keyForDisplay%></td>
-                    <td><%=times.get(i)%></td>
-                </tr>
-                <%
+                            System.out.println(key);
+                            String keyForDisplay = key.replaceAll("_", " ");
+
+                            ArrayList<String> times = entry.getValue();
+                            for (int i = 0; i < times.size(); i++) {%>
+                    <tr>
+                        <td><%=keyForDisplay%></td>
+                        <td><%=times.get(i)%></td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
-            </table>
+                    %>
+                </table>
+                <% } else { %>
+                <h4>Available for tutoring</h4>
+                <h5>You have no current availabilities posted.</h5>
+                <% } %>
             
-            
+        <%
+            Map<String, ArrayList<String>> scheduledAppointments = student.tutorScheduledAppointments;
+            if (!scheduledAppointments.isEmpty()){
+        %>            
             <h4>Booked for tutoring</h4>
             <table>
-                <%
-                    Map<String, ArrayList<String>> scheduledAppointments = student.tutorScheduledAppointments;
-                %>
                 <tr>
                     <th>Classes</th>
                     <th>Scheduled Appointments</th> 
@@ -109,7 +115,29 @@
                     }
                 %>
             </table>
-             
+            <% } else { %>
+            <h4>Booked for tutoring</h4>
+            <h5>You have no scheduled appointments.</h5>
+            <% } %>
+       <% ArrayList<String> studentRequests = (ArrayList<String>)request.getAttribute("studentRequests"); 
+          if (!studentRequests.isEmpty()){
+       %>
+            <h4>Active Student Requests</h4>
+            <form action="acceptRequest" method="POST">
+                <%
+                    for (int i = 0; i < studentRequests.size(); i++) {
+                %>
+                <input type="radio" name="studentRequests" value="<%=studentRequests.get(i)%>"><span class="radioText"><%=studentRequests.get(i)%></span><br>
+                <% }%>
+                <input type="hidden" name="username" value="<%= student.name %>" />
+                <input type="submit" class="button-primary" value="Accept Request" />
+                
+                <br>            
+            </form>
+            <% } else { %>
+            <h4>Active Student Requests</h4>
+            <h5>There are currently no active student requests.</h5>
+            <% } %> 
             <h4>Add more available times</h4>
             <form action="updateAvailability" method="POST">
                 <%
@@ -118,7 +146,7 @@
                 %>
                 <input type="radio" name="As" value="<%=earnedAs.get(i)%>"><span class="radioText"><%=earnedAs.get(i).replace("_", " ")%></span><br>
                 <% }%>
-
+            
                 <br>
                 </table>
                 <input type="hidden" name="username" value="<%= student.name %>" />
