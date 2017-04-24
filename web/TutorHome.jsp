@@ -234,7 +234,7 @@
                     <%
                         String onReady = "";
                         
-                        if (!scheduledAppointments.isEmpty())
+                        if (!studentRequests.isEmpty())
                             onReady = "$(document).ready(alertStudentRequests());"; 
                     %>
                         
