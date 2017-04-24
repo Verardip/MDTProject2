@@ -44,6 +44,10 @@
                 margin-left: 10px;
             }
             
+            th 
+            {
+                font-weight: 600;
+            }
             
 
             
