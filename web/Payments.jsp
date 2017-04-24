@@ -19,7 +19,7 @@
             {
                 font-family: 'Source Sans Pro', sans-serif;
                 font-weight: 300;
-                font-size: large;
+                /*font-size: small;*/
             }
 
             .container { margin-top: 50px; }
