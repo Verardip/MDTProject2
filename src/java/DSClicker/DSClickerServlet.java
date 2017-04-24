@@ -291,7 +291,6 @@ public class DSClickerServlet extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
-
     }
 
     /**
