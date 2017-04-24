@@ -203,6 +203,7 @@ public class DSClickerServlet extends HttpServlet {
             
             System.out.println("Updated availability for " + userName + " and " + className);
             Student student = dscModel.students.get(userName.toLowerCase());
+            request.setAttribute("studentRequests", studentRequests);
             request.setAttribute("student", student);
             student.updateAvailability(className, fullTime);
             RequestDispatcher view = request.getRequestDispatcher(nextView);
