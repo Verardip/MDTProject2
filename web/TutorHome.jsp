@@ -13,9 +13,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.15/datepair.min.js"></script>
+        <script src="https:////cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
         
         <!-- Includes for external CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css" />
         
                 <!-- Style sheets for styling are imported via CDN. 
              I used the popular Skeleton.css framework available via http://getskeleton.com/
@@ -203,6 +206,42 @@
 
                 </script>
 
+                
+                <script> 
+                    var alertStudentRequests = function() 
+                    {      
+                        toastr["info"]("Go earn some money now! :)", "A new tutoring job is available!")
+                    };
+
+                    toastr.options = {
+                      "closeButton": false,
+                      "debug": false,
+                      "newestOnTop": false,
+                      "progressBar": false,
+                      "positionClass": "toast-top-right",
+                      "preventDuplicates": false,
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }    
+                    
+                    <%
+                        String onReady = "";
+                        
+                        if (!scheduledAppointments.isEmpty())
+                            onReady = "$(document).ready(alertStudentRequests());"; 
+                    %>
+                        
+                    <%= onReady %>
+                    
+                    
+                </script>
 
                 <input type="submit" class="button-primary" value="Submit" />
             </form>
