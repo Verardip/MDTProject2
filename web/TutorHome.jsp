@@ -52,7 +52,16 @@
             {
                 font-weight: 600;
             }
-
+            
+            .toastr_link
+            {
+                color: white; 
+            }
+            
+            .toastr_link:hover
+            {
+                color: black;
+            }
             
             
             .container { margin-top: 50px; }
@@ -214,7 +223,7 @@
                 <script> 
                     var alertStudentRequests = function() 
                     {      
-                        toastr["info"]("Go earn some money now! :)", "A new tutoring job is available!")
+                        toastr["info"]("Go earn some money now! :)", "<a class=\'toastr_link\' href=\'#date_input\'>A new tutoring job is available!</a>")
                     };
 
                     toastr.options = {
