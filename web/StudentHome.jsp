@@ -57,13 +57,13 @@
         <div class="container">
 
             <h2>Welcome, Student!</h2>
-            
+    <%
+        Student student = (Student) request.getAttribute("student");
+        Map<String, ArrayList<String>> scheduledAppointments = student.studentScheduledAppointments;
+        if (!scheduledAppointments.isEmpty()){
+    %>            
             <h4>Your booked appointments.</h4>
             <table>
-                <%
-                    Student student = (Student) request.getAttribute("student");
-                    Map<String, ArrayList<String>> scheduledAppointments = student.studentScheduledAppointments;
-                %>
                     <th>Classes</th>
                     <th>Scheduled Appointments</th> 
                 </tr>
@@ -80,9 +80,12 @@
                     }
                 %>
             </table>
+            <% } else { %>
+            <h4>Your booked appointments.</h4>
+            <h5>You have no booked appointments.</h5>
+            <% } %>
             
-            
-            <h4>Need more tutoring</h4>
+            <h4>Need more tutoring?</h4>
             <form action="requestTutoring" method="GET">
                 <p>Choose your class:</p>
                 <%

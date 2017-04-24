@@ -64,9 +64,10 @@ public class Student {
         if (tutorAvailability.containsKey(className) == false)
             throw new IllegalArgumentException();
         
-        // Get the current times and remove availability.
+
         ArrayList<String> currentTimes = tutorAvailability.get(className);
         currentTimes.remove(timeSlot);
+
         
         System.out.println(currentTimes.toString());
         
