@@ -149,7 +149,7 @@
        <% ArrayList<String> studentRequests = (ArrayList<String>)request.getAttribute("studentRequests"); 
           if (!studentRequests.isEmpty()){
        %>
-            <h4>Active Student Requests</h4>
+            <h4 id="openrequests">Active Student Requests</h4>
             <form action="acceptRequest" method="POST">
                 <%
                     for (int i = 0; i < studentRequests.size(); i++) {
@@ -234,7 +234,7 @@
                 <script> 
                     var alertStudentRequests = function() 
                     {      
-                        toastr["info"]("Go earn some money now! :)", "<a class=\'toastr_link\' href=\'#date_input\'>A new tutoring job is available!</a>")
+                        toastr["info"]("Go earn some money now! :)", "<a class=\'toastr_link\' href=\'#openrequests\'>A new tutoring job is available!</a>")
                     };
 
                     toastr.options = {
@@ -244,7 +244,7 @@
                       "progressBar": false,
                       "positionClass": "toast-top-center",
                       "preventDuplicates": false,
-                      "onclick": function() {location = "#date_input";},
+                      "onclick": function() {location = "#openrequests";},
                       "showDuration": "300",
                       "hideDuration": "1000",
                       "timeOut": "5000",
