@@ -22,60 +22,164 @@
                 /*font-size: small;*/
             }
 
-            .container { margin-top: 50px; }
-        </style>
+            .container { margin-top: 0px;
+                         margin: auto;
+            }
 
-        
-    </head>
-    <body>
-        <div class="container">
-            <h3>Payment logs</h3>
-            <table>
-                <tr>
-                    <th nowrap="nowrap"><b>Transaction ID</b></th>
-                    <th nowrap="nowrap"><b>Tutor</b></th>
-                    <th nowrap="nowrap"><b>Tutee</b></th>
-                    <th nowrap="nowrap"><b>Course</b></th>
-                    <th nowrap="nowrap"><b>Date</b></th>
-                    <th nowrap="nowrap"><b>Start Time</b></th>
-                    <th nowrap="nowrap"><b>End Time</b></th>
-                    <th nowrap="nowrap"><b>Rate</b></th>
-                    <th nowrap="nowrap"><b>Payment</b></th>
-                </tr>
-                <tr>
-                    <td>0019283</td>
-                    <td nowrap="nowrap">Paul Verardi</td>
-                    <td nowrap="nowrap">Theresa Froehlich</td>
-                    <td nowrap="nowrap">Data Structures</td>
-                    <td nowrap="nowrap">Wednesday, April 25 2017</td>
-                    <td>1:00 PM </td>
-                    <td>2:00 PM </td>
-                    <td>$10/hr</td>
-                    <td>$10.00</td>
-                </tr>
-                <tr>
-                    <td>0017293</td>
-                    <td nowrap="nowrap">Paul Verardi</td>
-                    <td nowrap="nowrap">Andrew Lawson</td>
-                    <td nowrap="nowrap">Data Structures</td>
-                    <td nowrap="nowrap">Wednesday, April 25 2017</td>
-                    <td>2:00 PM </td>
-                    <td>3:00 PM </td>
-                    <td>$10/hr</td>
-                    <td>$10.00</td>
-                </tr>
-                <tr>
-                    <td>0019283</td>
-                    <td nowrap="nowrap">Chris Heywood</td>
-                    <td nowrap="nowrap">Theresa Froehlich</td>
-                    <td nowrap="nowrap">Calculus</td>
-                    <td nowrap="nowrap">Wednesday, April 25 2017</td>
-                    <td>8:00 PM </td>
-                    <td>9:30 PM </td>
-                    <td>$10/hr</td>
-                    <td>$15.00</td>
-                </tr>
-            </table>
-        </div>
-    </body>
-</html>
+            table { 
+                width: 100%; 
+                border-collapse: collapse; 
+            }
+            th { 
+                background: #eee; 
+            }
+            td, th { 
+                padding: 6px; 
+                text-align: left; 
+            }
+
+            /*
+            Max width before this PARTICULAR table gets nasty
+            This query will take effect for any screen smaller than 760px
+            and also iPads specifically.
+            */
+            @media
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+                /* Force table to not be like tables anymore */
+                table, thead, tbody, th, td, tr {
+                    display: block;
+                }
+
+                /* Hide table headers (but not display: none;, for accessibility) */
+                thead tr {
+                    position: absolute;
+                    top: -9999px;
+                    left: -9999px;
+                }
+
+                tr { border: 1px solid #ccc; }
+
+                td {
+                    /* Behave  like a "row" */
+                    border: none;
+                    border-bottom: 1px solid #eee;
+                    position: relative;
+                    padding-left: 50%;
+                }
+
+                td:before {
+                    /* Now like a table header */
+                    position: absolute;
+                    /* Top/left values mimic padding */
+                    top: 6px;
+                    left: 6px;
+                    width: 45%;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                }
+
+                /*
+                Label the data
+                */
+                td:nth-of-type(1):before { content: " "; }
+                td:nth-of-type(2):before { content: "Tutor:"; }
+                td:nth-of-type(3):before { content: "Tutee:"; }
+                td:nth-of-type(4):before { content: "Course:"; }
+                td:nth-of-type(5):before { content: "Date:"; }
+                td:nth-of-type(6):before { content: "Start Time:"; }
+                td:nth-of-type(7):before { content: "End Time:"; }
+                td:nth-of-type(8):before { content: "Surge:"; }
+                td:nth-of-type(9):before { content: "Rate:"; }
+                td:nth-of-type(10):before { content: "Payment Amount:"; }
+                td:nth-of-type(11):before { content: "Payment Status:"; }
+                td:nth-of-type(12):before { content: "Transaction ID:"; }
+
+                /* Smartphones (portrait and landscape) ----------- */
+                @media only screen
+                and (min-device-width : 320px)
+                and (max-device-width : 480px) {
+                    body {
+                        padding: 0;
+                        margin: 0;
+                        width: 320px; }
+                }
+
+                /* iPads (portrait and landscape) ----------- */
+                @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+                    body {
+                        width: 495px;
+                    }
+                }
+
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h3>Payment logs</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th nowrap="nowrap"><b>Session #</b></th>
+                            <th nowrap="nowrap"><b>Tutor</b></th>
+                            <th nowrap="nowrap"><b>Tutee</b></th>
+                            <th nowrap="nowrap"><b>Course</b></th>
+                            <th nowrap="nowrap"><b>Date</b></th>
+                            <th nowrap="nowrap"><b>Start Time</b></th>
+                            <th nowrap="nowrap"><b>End Time</b></th>
+                            <th nowrap="nowrap"><b>Surge</b>
+                            <th nowrap="nowrap"><b>Rate</b></th>
+                            <th><b>Payment Amount</b></th>
+                            <th><b>Payment Status</b></th>
+                            <th nowrap="nowrap"><b>Transaction ID</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> 00001</td>
+                            <td>Paul Verardi</td>
+                            <td>Theresa Froehlich</td>
+                            <td>Data Structures</td>
+                            <td>Wednesday, April 25 2017</td>
+                            <td>1:00 PM </td>
+                            <td>2:00 PM </td>
+                            <td>x0.0</td>
+                            <td>$10/hr</td>
+                            <td>$10.00</td>
+                            <td style="color: green;">Completed</td>
+                            <td nowrap="nowrap">001432</td>
+                        </tr>
+                        <tr>
+                            <td> 00002</td>
+                            <td>Paul Verardi</td>
+                            <td>Andrew Lawson</td>
+                            <td>Data Structures</td>
+                            <td>Wednesday, April 25 2017</td>
+                            <td>2:00 PM </td>
+                            <td>3:00 PM </td>
+                            <td>x0.2</td>
+                            <td>$10/hr</td>
+                            <td>$12.00</td>
+                            <td style="color: green;">Completed</td>
+                            <td>004782</td>
+                        </tr>
+                        <tr>
+                            <td> 00003</td>
+                            <td>Chris Heywood</td>
+                            <td>Theresa Froehlich</td>
+                            <td>Calculus</td>
+                            <td>Wednesday, April 25 2017</td>
+                            <td>8:00 PM </td>
+                            <td>9:30 PM </td>
+                            <td>x0.1</td>
+                            <td>$12/hr</td>
+                            <td>$13.20</td>
+                            <td style="color: red;">Pending</td>
+                            <td>004782</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </body>
+    </html>
