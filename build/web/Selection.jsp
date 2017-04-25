@@ -36,7 +36,7 @@
             <% String nameToDisplay = request.getAttribute("username").toString();
                nameToDisplay = DSClickerServlet.initCaps(nameToDisplay);%>
                <div><p><form action="backToLogin" method="GET">
-                <input type="submit" style="float: right;" class="button-primary" value="Logout" name="logout"/><br>
+                <input type="submit" style="float: right;" class="button" value="Logout" name="logout"/><br>
                 </form>
                 Hello <%= nameToDisplay %> !</p>
                </div>

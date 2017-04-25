@@ -79,7 +79,7 @@
         %>
             <form action="Home" method="GET">
                 <input type="hidden" name="username" value="<%= student.name %>" />
-                <input type="submit" style="float: right;" class="button-primary" value="Home" name="Home"/><br>
+                <input type="submit" style="float: right;" class="button" value="Home" name="Home"/><br>
             </form>
             <h2>Welcome, Tutor!</h2>
                     

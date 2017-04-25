@@ -46,3 +46,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /dist/
+nbproject/private/private.xml
+
+nbproject/private/private.properties
+
+build/web/WEB-INF/classes/DSClicker/DSClickerServlet.rs
+
+build/generated/classes/org/apache/jsp/Login_jsp.class
