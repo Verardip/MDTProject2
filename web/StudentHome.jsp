@@ -60,10 +60,15 @@
     
     <body>
         <div class="container">
-
+        <%
+        Student student = (Student) request.getAttribute("student");
+        %>  
+            <form action="Home" method="GET">
+                <input type="hidden" name="username" value="<%= student.name %>" />
+                <input type="submit" style="float: right;" class="button-primary" value="Home" name="Home"/><br>
+            </form>
             <h2>Welcome, Student!</h2>
     <%
-        Student student = (Student) request.getAttribute("student");
         Map<String, ArrayList<String>> scheduledAppointments = student.studentScheduledAppointments;
         if (!scheduledAppointments.isEmpty()){
     %>            

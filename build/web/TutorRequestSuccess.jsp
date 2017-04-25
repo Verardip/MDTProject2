@@ -52,12 +52,16 @@
         
     </head>
     <body>
-        
+        <% String studentName = (String)request.getAttribute("studentName"); %>
         <div class="container">
+            
+            <form action="Home" method="GET">
+                <input type="hidden" name="username" value="<%= studentName %>" />
+                <input type="submit" style="float: right;" class="button-primary" value="Home" name="Home"/><br>
+            </form>
         <h2>On your way!</h2>
         
             <%  
-                String studentName = (String)request.getAttribute("studentName");
                 String className = ((String)request.getAttribute("className")).replace("_", " ");
                 String tutorTime = (String)request.getAttribute("tutorTime");
  
