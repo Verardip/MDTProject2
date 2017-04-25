@@ -58,15 +58,19 @@
     </head>
     
     <body>
-        
+        <%String username = (String)request.getAttribute("username"); %>
         <div class="container">
+            
+            <form action="Home" method="GET">
+                <input type="hidden" name="username" value="<%= username %>" />
+                <input type="submit" style="float: right;" class="button-primary" value="Home" name="Home"/><br>
+            </form>
             <h2>Book your Tutor</h2>
             
             <h4>Choose available tutors</h4>
             <form action="bookTutoring" method="POST">
                 <%
                     String className = (String)request.getAttribute("subject");
-                    String username = (String)request.getAttribute("username");
                     ArrayList<Student> availableTutors = (ArrayList<Student>) request.getAttribute("availableTutors");
 //                    String disabled = "disabled";
 //                    

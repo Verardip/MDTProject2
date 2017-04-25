@@ -72,11 +72,22 @@
     
     <body>
         <div class="container">
-            <h2>Welcome, Tutor!</h2>
+            
         <%
             Student student = (Student) request.getAttribute("student");
-            Map<String, ArrayList<String>> availability = student.tutorAvailability;
             
+        %>
+            <form action="Home" method="GET">
+                <input type="hidden" name="username" value="<%= student.name %>" />
+                <input type="submit" style="float: right;" class="button-primary" value="Home" name="Home"/><br>
+            </form>
+            <h2>Welcome, Tutor!</h2>
+                    
+          
+        <%
+            Map<String, ArrayList<String>> availability = student.tutorAvailability;
+        %>
+        <%
             if (!availability.isEmpty()){
         %>            
                 <h4>Available for tutoring</h4>
