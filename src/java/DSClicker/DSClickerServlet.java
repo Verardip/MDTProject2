@@ -24,14 +24,14 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-
-import javax.mail.internet.MimeMessage;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//
+//import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DSClickerServlet",
         urlPatterns = {"/Login", "/selection", "/submit", "/getResults",
             "/tutor", "/updateAvailability", "/requestTutoring",
-            "/bookTutoring", "/requestTutorTime", "/acceptRequest", "/payments", "/backToLogin", "/Home"})
+            "/bookTutoring", "/requestTutorTime", "/acceptRequest", "/payments", "/backToLogin", "/Home", "/analytics"})
 public class DSClickerServlet extends HttpServlet {
 
     public static ArrayList<String> studentRequests = new ArrayList<>();
@@ -87,21 +87,20 @@ public class DSClickerServlet extends HttpServlet {
         }
 
         String nextView;
-        
-        
+
         if (requestSource.equals("/backToLogin")) {
             nextView = "Login.jsp";
             System.out.println("Logout Button Pressed");
-            
+
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
-        
+
         if (requestSource.equals("/Home")) {
             nextView = "Selection.jsp";
             System.out.println("Home Button Pressed");
             request.setAttribute("username", username);
-            
+
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -109,7 +108,7 @@ public class DSClickerServlet extends HttpServlet {
         if (requestSource.equals("/Login")) {
             nextView = "Login.jsp";
             System.out.println("Test");
-            
+
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -131,6 +130,12 @@ public class DSClickerServlet extends HttpServlet {
 
         if (requestSource.equals("/payments")) {
             nextView = "Payments.jsp";
+            RequestDispatcher view = request.getRequestDispatcher(nextView);
+            view.forward(request, response);
+        }
+
+        if (requestSource.equals("/analytics")) {
+            nextView = "Analytics.jsp";
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
         }
@@ -277,16 +282,14 @@ public class DSClickerServlet extends HttpServlet {
 
             String date = request.getParameter("date");
             String fullTime = generateDateString(date, startTime, endTime);
-            
+
             String emailHeader = "New request from MDTutor!";
             String emailMessage = "<b>Hello there!</b><br><br><em>" + initCaps(studentName) + "</em> is looking for tutoring in " + className + " on <b>" + fullTime
-                                    + "</b> - are you free?<br>Let us know: <a href=\"https://cryptic-sea-68601.herokuapp.com\">Log-in to MDTutor now</a><br><br>Cheers from MDTutor";
-            
+                    + "</b> - are you free?<br>Let us know: <a href=\"https://cryptic-sea-68601.herokuapp.com\">Log-in to MDTutor now</a><br><br>Cheers from MDTutor";
+
 //            String[] emails = {"andrewlawson@cmu.edu", "shermane@andrew.cmu.edu", "pverardi@andrew.cmu.edu"};
 //            for (String s : emails)
-            
             // MailMonkey mailMonkey = new MailMonkey(emailHeader, emailMessage);
-            
             System.out.println(className + ":" + fullTime + ":" + studentName);
             String studentRequest = studentName + ": " + className + ": " + fullTime;
             System.out.println("studentRequest = " + studentRequest);
@@ -387,103 +390,103 @@ public class DSClickerServlet extends HttpServlet {
         //return notInitCaps;
     }
 
-
-    private void sendEmail(String to, String subject, String body) {
-       Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
-
-		Session session = Session.getInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("disruptutor","disruption");
-				}
-			});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("disruptutor@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(to));
-			message.setSubject(subject);
-			message.setText(body);
-
-			Transport.send(message);
-
-			System.out.println("Done");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-    }
-    
-// Use with care.
-class MailMonkey implements Runnable
-{
-    String subject;
-    String body;
-    String[] emails = {"shermane@andrew.cmu.edu"};
-    Thread myThread ;
-    
-    
-    MailMonkey(String subject, String body)
-    {
-        this.subject = subject;
-        this.body = body;
-        myThread = new Thread(this, "Email thread");
-        myThread.setPriority(1); 
-        myThread.start();
-    }
-    
-    @Override
-    public void run()
-    {
-        try {
-            Thread.sleep(0);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MailMonkey.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        for (String s : emails)
-        {
-        
-        Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
-
-		Session session = Session.getInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("disruptutor","[password goes here]");
-				}
-			});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("disruptutor@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(s));
-			message.setSubject(subject);
-			message.setContent(body, "text/html; charset=utf-8");
-
-			Transport.send(message);
-
-			System.out.println("Done");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-    }
+//
+//    private void sendEmail(String to, String subject, String body) {
+//       Properties props = new Properties();
+//		props.put("mail.smtp.host", "smtp.gmail.com");
+//		props.put("mail.smtp.socketFactory.port", "465");
+//		props.put("mail.smtp.socketFactory.class",
+//				"javax.net.ssl.SSLSocketFactory");
+//		props.put("mail.smtp.auth", "true");
+//		props.put("mail.smtp.port", "465");
+//
+//		Session session = Session.getInstance(props,
+//			new javax.mail.Authenticator() {
+//				protected PasswordAuthentication getPasswordAuthentication() {
+//					return new PasswordAuthentication("disruptutor","disruption");
+//				}
+//			});
+//
+//		try {
+//
+//			Message message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress("disruptutor@gmail.com"));
+//			message.setRecipients(Message.RecipientType.TO,
+//					InternetAddress.parse(to));
+//			message.setSubject(subject);
+//			message.setText(body);
+//
+//			Transport.send(message);
+//
+//			System.out.println("Done");
+//
+//		} catch (MessagingException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+//    }
+//    
+//// Use with care.
+//class MailMonkey implements Runnable
+//{
+//    String subject;
+//    String body;
+//    String[] emails = {"shermane@andrew.cmu.edu"};
+//    Thread myThread ;
+//    
+//    
+//    MailMonkey(String subject, String body)
+//    {
+//        this.subject = subject;
+//        this.body = body;
+//        myThread = new Thread(this, "Email thread");
+//        myThread.setPriority(1); 
+//        myThread.start();
+//    }
+//    
+//    @Override
+//    public void run()
+//    {
+//        try {
+//            Thread.sleep(0);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(MailMonkey.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        for (String s : emails)
+//        {
+//        
+//        Properties props = new Properties();
+//		props.put("mail.smtp.host", "smtp.gmail.com");
+//		props.put("mail.smtp.socketFactory.port", "465");
+//		props.put("mail.smtp.socketFactory.class",
+//				"javax.net.ssl.SSLSocketFactory");
+//		props.put("mail.smtp.auth", "true");
+//		props.put("mail.smtp.port", "465");
+//
+//		Session session = Session.getInstance(props,
+//			new javax.mail.Authenticator() {
+//				protected PasswordAuthentication getPasswordAuthentication() {
+//					return new PasswordAuthentication("disruptutor","[password goes here]");
+//				}
+//			});
+//
+//		try {
+//
+//			Message message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress("disruptutor@gmail.com"));
+//			message.setRecipients(Message.RecipientType.TO,
+//					InternetAddress.parse(s));
+//			message.setSubject(subject);
+//			message.setContent(body, "text/html; charset=utf-8");
+//
+//			Transport.send(message);
+//
+//			System.out.println("Done");
+//
+//		} catch (MessagingException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+//    }
 }
