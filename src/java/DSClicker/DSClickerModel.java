@@ -94,6 +94,4 @@ public class DSClickerModel {
         
         // return notInitCaps;
     }
-    
-    
 }
