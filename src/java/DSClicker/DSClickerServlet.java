@@ -114,13 +114,21 @@ public class DSClickerServlet extends HttpServlet {
         }
 
         if (requestSource.equals("/selection")) {
-            nextView = "Selection.jsp";
 
-            if (!DSClickerModel.students.containsKey(username.toLowerCase())) {
+            if (username.toLowerCase().equals("admin")) { 
+                nextView = "Selection.jsp";
+                request.setAttribute("username", username);
+                RequestDispatcher view = request.getRequestDispatcher(nextView);
+                view.forward(request, response);
+            }
+
+            if (!DSClickerModel.students.containsKey(username.toLowerCase()) && !username.equals("admin")) {
                 nextView = "InvalidLogin.jsp";
                 RequestDispatcher view = request.getRequestDispatcher(nextView);
                 view.forward(request, response);
             }
+
+            nextView = "Selection.jsp";
 
             request.setAttribute("username", username);
 
@@ -173,6 +181,16 @@ public class DSClickerServlet extends HttpServlet {
                 Student student = dscModel.students.get(username);
                 System.out.println(student.name);
                 request.setAttribute("student", student);
+                RequestDispatcher view = request.getRequestDispatcher(nextView);
+                view.forward(request, response);
+            } else if (request.getParameter("intent").equals("See payment logs")) {
+                System.out.println("See payment logs");
+                nextView = "Payments.jsp";
+                RequestDispatcher view = request.getRequestDispatcher(nextView);
+                view.forward(request, response);
+            } else if (request.getParameter("intent").equals("View current analytics")) {
+                System.out.println("Needs tutoring.");
+                nextView = "Analytics.jsp";
                 RequestDispatcher view = request.getRequestDispatcher(nextView);
                 view.forward(request, response);
             }
