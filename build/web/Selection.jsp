@@ -45,7 +45,7 @@
             <h2>What do you need today?</h2>
             <form action="tutor" method="GET">
                 <%
-                    if (request.getAttribute("username").toString().equals("admin")) {
+                    if (request.getAttribute("username").toString().toLowerCase().equals("admin")) {
                 %>
                 <input type="submit" class="u-full-width" value="See payment logs" name="intent" /><br>
                 <input type="submit" class="u-full-width" value="View current analytics" name="intent" />
