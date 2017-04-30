@@ -107,11 +107,12 @@
 
             <h4>Choose another time.</h4>
             <p>None of these times work for you? Select a time that does!</p>
-            <form action="requestTutorTime" method="POST">
+            <form action="requestTutorTime" onsubmit="return validate_date();" method="POST">
 
                 <!--    Try inputting the Time Range in a fancy format here.
                         Documentation: https://jonthornton.github.io/Datepair.js/ -->
                 <p id="basicExample">
+                    <label id="dateVal" style="display:none;color:red;">Please select a date!</label>
                     <label for="date_input">Date</label>
                         <input type="date" name="date" min="2017-04-01" max="2017-05-31" id="date_input"/>
 
@@ -159,7 +160,17 @@
                     // Simple utility to check first radio button.
                     var allRadioButtons = document.getElementsByName("tutorChoice");
                     allRadioButtons[0].checked = true;
-
+                    
+                    function validate_date(){
+                        var dateVal = document.getElementById("date_input").value;
+                        if (dateVal === "" || dateVal === null){
+                            document.getElementById("dateVal").style.display ="block";
+                            return false;
+                        } else {
+                            document.getElementById("dateVal").style.display ="none";
+                            return true;
+                        }
+                    }
 
                 </script>
 

@@ -166,7 +166,7 @@
             <h5>There are currently no active student requests.</h5>
             <% } %> 
             <h4>Add more available times</h4>
-            <form action="updateAvailability" method="POST">
+            <form action="updateAvailability" onsubmit="return validate_date();"method="POST">
                 <%
                     ArrayList<String> earnedAs = student.classesEarnedA;
                     for (int i = 0; i < earnedAs.size(); i++) {
@@ -181,6 +181,7 @@
                 <!--    Try inputting the Time Range in a fancy format here.
                         Documentation: https://jonthornton.github.io/Datepair.js/ -->
                 <p id="basicExample">
+                    <label id="dateVal" style="display:none;color:red;">Please select a date!</label>
                     <label for="date_input">Date</label>
                         <input type="date" name="date" min="2017-04-01" max="2017-05-31" id="date_input"/>
 
@@ -228,12 +229,12 @@
                     allRadioButtons[0].checked = true;
 
                     function validate_date(){
-                        var dateVal = document.getElementById("date_input").value
-                        if (dateVal == "" || datVal == null){
-                            document.getElementById("dateval").style.visibility ="visible";
+                        var dateVal = document.getElementById("date_input").value;
+                        if (dateVal === "" || dateVal === null){
+                            document.getElementById("dateVal").style.display ="block";
                             return false;
                         } else {
-                            document.getElementById("dateval").style.visibility ="hidden";
+                            document.getElementById("dateVal").style.display ="none";
                             return true;
                         }
                     }
@@ -276,8 +277,8 @@
                     
                     
                 </script>
-                <label id="dateVal" style="color:red;" visible="hidden">Please select a date!</label>
-                <input type="submit" class="button-primary" onclick="return validate_date();" value="Submit" />
+                
+                <input type="submit" class="button-primary" value="Submit" />
             </form>
         </div>
     </body>
