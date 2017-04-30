@@ -19,8 +19,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -45,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
             "/bookTutoring", "/requestTutorTime", "/acceptRequest", "/payments", "/backToLogin", "/Home", "/analytics"})
 public class DSClickerServlet extends HttpServlet {
 
-    public static ArrayList<String> studentRequests = new ArrayList<>();
+    public static Set<String> studentRequests = new HashSet<>();
 
     DSClickerModel dscModel = null;  // The "business model" for this app
     boolean initAlready = false;
@@ -159,15 +162,26 @@ public class DSClickerServlet extends HttpServlet {
                 Student student = dscModel.students.get(username);
                 System.out.println(student.name);
                 ArrayList<String> relevantRequests = new ArrayList<>();
-
-                for (int a = 0; a < studentRequests.size(); a++) {
-                    String tempRequest = studentRequests.get(a);
-                    String[] tempRequestData = tempRequest.split(": ");
-                    if (student.classesEarnedA.contains(tempRequestData[1])) {
-                        String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
-                        relevantRequests.add(prettyRequest);
-                    }
-                }
+                
+                     Iterator<String> it = studentRequests.iterator();
+                        while(it.hasNext()){
+                            String tempRequest = it.next();
+                            String[] tempRequestData = tempRequest.split(": ");
+                            System.out.println(tempRequest);
+                            
+                            if (student.classesEarnedA.contains(tempRequestData[1])) {
+                            String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
+                            relevantRequests.add(prettyRequest);
+                            }                       
+                        }
+//                for (int a = 0; a < studentRequests.size(); a++) {
+//                    String tempRequest = studentRequests.get(a);
+//                    String[] tempRequestData = tempRequest.split(": ");
+//                    if (student.classesEarnedA.contains(tempRequestData[1])) {
+//                        String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
+//                        relevantRequests.add(prettyRequest);
+//                    }
+//                }
                 request.setAttribute("studentRequests", relevantRequests);
                 request.setAttribute("student", student);
                 RequestDispatcher view = request.getRequestDispatcher(nextView);
@@ -306,7 +320,7 @@ public class DSClickerServlet extends HttpServlet {
         } else if (requestSource.equals("/requestTutorTime")) {
             nextView = "TutorRequestSuccess.jsp";
 
-            String studentName = request.getParameter("username");
+            String studentName = request.getParameter("username").toLowerCase();
             String className = request.getParameter("className");
             String startTime = request.getParameter("start_time");
             String endTime = request.getParameter("end_time");
