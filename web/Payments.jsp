@@ -22,9 +22,10 @@
                 /*font-size: small;*/
             }
 
-            .container { margin-top: 0px;
+            .container { margin-top: 50px !important;
                          margin: auto;
             }
+            
 
             table { 
                 width: 100%; 
@@ -32,10 +33,17 @@
             }
             th { 
                 background: #eee; 
+                padding: 6px !important;
+                font-weight: 400;
             }
             td, th { 
-                padding: 6px; 
+                padding: 6px;
                 text-align: left; 
+            }
+            
+            th:first-child, td:first-child
+            {
+                padding: 6px;
             }
 
             /*
@@ -47,21 +55,35 @@
             only screen and (max-width: 760px),
             (min-device-width: 768px) and (max-device-width: 1024px)  {
 
+                td:first-child
+                {
+                    text-align: center;
+                    font-weight: 600;
+                    border-bottom: 3px solid #eee;
+                }
+                
+                
                 /* Force table to not be like tables anymore */
                 table, thead, tbody, th, td, tr {
                     display: block;
                 }
 
                 /* Hide table headers (but not display: none;, for accessibility) */
-                thead tr {
+                thead tr 
+                {
                     position: absolute;
                     top: -9999px;
                     left: -9999px;
                 }
 
-                tr { border: 1px solid #ccc; }
+                tr 
+                {   
+                    border: 1px solid #ccc; 
+                    margin-bottom: 20px;
+                }
 
-                td {
+                td 
+                {
                     /* Behave  like a "row" */
                     border: none;
                     border-bottom: 1px solid #eee;
@@ -78,7 +100,11 @@
                     width: 45%;
                     padding-right: 10px;
                     white-space: nowrap;
-                }
+                } 
+                
+                       
+            
+                .container { margin-top: 20px; }
 
                 /*
                 Label the data
@@ -121,7 +147,7 @@
                 <input type="hidden" name="username" value="admin" />
                 <input type="submit" style="float: right;" class="button" value="Home" name="Home"/><br>
             </form>
-                <h3>Payment logs</h3>
+                <h3>Payment Logs</h3>
                 <table>
                     <thead>
                         <tr>
@@ -148,7 +174,7 @@
                             <td>Wednesday, April 25 2017</td>
                             <td>1:00 PM </td>
                             <td>2:00 PM </td>
-                            <td>x0.0</td>
+                            <td>x1.0</td>
                             <td>$10/hr</td>
                             <td>$10.00</td>
                             <td style="color: green;">Completed</td>
@@ -162,7 +188,7 @@
                             <td>Wednesday, April 25 2017</td>
                             <td>2:00 PM </td>
                             <td>3:00 PM </td>
-                            <td>x0.2</td>
+                            <td>x1.2</td>
                             <td>$10/hr</td>
                             <td>$12.00</td>
                             <td style="color: green;">Completed</td>
@@ -176,7 +202,7 @@
                             <td>Wednesday, April 25 2017</td>
                             <td>8:00 PM </td>
                             <td>9:30 PM </td>
-                            <td>x0.1</td>
+                            <td>x1.1</td>
                             <td>$12/hr</td>
                             <td>$13.20</td>
                             <td style="color: red;">Pending</td>

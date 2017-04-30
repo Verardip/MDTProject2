@@ -226,6 +226,10 @@
                     // Simple utility to check first radio button.
                     var allRadioButtons = document.getElementsByName("As");
                     allRadioButtons[0].checked = true;
+                    
+                    let openRequests = document.getElementsByName("studentRequests");
+                    openRequests[0].checked = true;
+                    
 
                     function validate_date(){
                         var dateVal = document.getElementById("date_input").value
@@ -271,6 +275,10 @@
                         if (!studentRequests.isEmpty())
                             onReady = "$(document).ready(alertStudentRequests());"; 
                     %>
+                        
+                        
+                        
+                        
                         
                     <%= onReady %>
                     

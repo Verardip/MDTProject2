@@ -20,6 +20,20 @@
 
         <!-- Styles -->
         <style>
+            
+            .charts 
+            {
+                margin-bottom: 2em;
+            }
+            
+            .chart_heading
+            {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+                font-weight: 600;
+                font-size: 1.5em;
+            }
+            
             #chartdiv {
                 width	: 100%;
                 height	: 500px;
@@ -34,6 +48,21 @@
                 height		: 500px;
                 font-size	: 11px;
             }	
+            
+            * 
+            {
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: 300;
+                font-size: large;
+            }
+            
+            .container { margin-top: 50px; }
+            
+            hr
+            {
+                margin-bottom: 3em;
+            }
+            
         </style>
 
         <!-- Resources -->
@@ -46,12 +75,16 @@
         <title>Analytics Page</title>
     </head>
     <body>
+
+        <div class="container"> 
             <form action="Home" method="GET">
                 <input type="hidden" name="username" value="admin" />
                 <input type="submit" style="float: right;" class="button" value="Home" name="Home"/><br>
             </form>
-        <div class="container">
-            <h2><u>Number of Tutoring Sessions per Day in First Month</u></h2><br>
+            
+            <h3>Analytics</h3>
+            
+            <h2 class="chart_heading">Number of Tutoring Sessions per Day in First Month</h2>
 
             <!-- Chart code -->
             <script>
@@ -141,10 +174,10 @@
             </script>
 
             <!-- HTML -->
-            <div id="chartdiv"></div>
-
-            <br><br><br><br><br>
-            <h2><u>Number of Tutoring Sessions per Class Year</u></h2><br>
+            <div class="charts" id="chartdiv"></div>
+            <hr>
+            
+            <h2 class="chart_heading">Number of Tutoring Sessions per Class Year</h2>
 
             <!-- Chart code -->
             <script>
@@ -200,10 +233,10 @@
             </script>
 
             <!-- HTML -->
-            <div id="chartdiv2"></div>	
-
-            <br><br><br><br><br>
-            <h2><u>Ratio of Overall Courses tutored per Semester</u></h2><br>
+            <div class="charts" id="chartdiv2"></div>	
+            <hr>
+            
+            <h2 class="chart_heading">Ratio of Overall Courses tutored per Semester</h2>
 
             <!-- Chart code -->
             <script>
@@ -338,7 +371,7 @@
             </script>
 
             <!-- HTML -->
-            <div id="chartdiv3"></div>
+            <div class="charts" id="chartdiv3"></div>
         </div>
     </body>
 </html>
