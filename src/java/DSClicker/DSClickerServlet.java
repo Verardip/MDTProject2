@@ -115,7 +115,7 @@ public class DSClickerServlet extends HttpServlet {
 
         if (requestSource.equals("/selection")) {
 
-            if (username.toLowerCase().equals("admin")) { 
+            if (username.toLowerCase().equals("admin")) {
                 nextView = "Selection.jsp";
                 request.setAttribute("username", username);
                 RequestDispatcher view = request.getRequestDispatcher(nextView);
@@ -256,14 +256,27 @@ public class DSClickerServlet extends HttpServlet {
             String date = request.getParameter("date");
             String fullTime = generateDateString(date, startTime, endTime);
             System.out.println(fullTime);
+            Student student = dscModel.students.get(userName.toLowerCase());
+
+            if (student.tutorAvailability.containsKey(className)) {
+                for (int i = 0; i < student.tutorAvailability.get(className).size(); i++) {
+                    if (student.tutorAvailability.get(className).get(i).equals(fullTime)) {
+                        nextView = "TutorHomeFailure.jsp";
+                        request.setAttribute("studentRequests", studentRequests);
+                        request.setAttribute("student", student);
+                        RequestDispatcher view = request.getRequestDispatcher(nextView);
+                        view.forward(request, response);
+                    }
+                }
+            }
 
             System.out.println("Updated availability for " + userName + " and " + className);
-            Student student = dscModel.students.get(userName.toLowerCase());
             request.setAttribute("studentRequests", studentRequests);
             request.setAttribute("student", student);
             student.updateAvailability(className, fullTime);
             RequestDispatcher view = request.getRequestDispatcher(nextView);
             view.forward(request, response);
+
         } else if (requestSource.equals("/bookTutoring")) {
             nextView = "TutorBookedSuccess.jsp";
 
