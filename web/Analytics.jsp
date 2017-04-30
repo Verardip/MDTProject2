@@ -46,6 +46,10 @@
         <title>Analytics Page</title>
     </head>
     <body>
+            <form action="Home" method="GET">
+                <input type="hidden" name="username" value="admin" />
+                <input type="submit" style="float: right;" class="button" value="Home" name="Home"/><br>
+            </form>
         <div class="container">
             <h2><u>Number of Tutoring Sessions per Day in First Month</u></h2><br>
 

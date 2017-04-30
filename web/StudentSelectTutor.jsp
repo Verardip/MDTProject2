@@ -80,12 +80,14 @@
 //                    
                     //Map<String, ArrayList<Student>> availableTutors = (Map<String, ArrayList<Student>>)request.getAttribute("MapsOfStudents");
                     Student tutor;
+                    int count = 0;
                     for (int i = 0; i < availableTutors.size(); i++){
                         tutor = availableTutors.get(i);
                         if (tutor.tutorAvailability.containsKey(className)){
                             ArrayList<String> times = tutor.tutorAvailability.get(className);
                             for (int j = 0; j < times.size(); j++){
                                 String rowItem = tutor.name + ": " + times.get(j);
+                                count++;
                                 %>
                                 <input type="radio" name="tutorChoice" value="<%=rowItem%>"><span class="radioText"><%=rowItem%></span><br>
                             <% }%>
@@ -96,8 +98,11 @@
                 <input type="hidden" name="className" value="<%= className %>" />
                 <input type="hidden" name="username" value="<%= username %>" />
 
-
+                <% if (count == 0){
+                %> <h5>There are no tutors currently available for this subject.</h5>
+               <% } else { %>
                 <input type="submit" value="Submit" />
+                        <%}%>
             </form>
 
             <h4>Choose another time.</h4>
