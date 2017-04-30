@@ -227,7 +227,17 @@
                     var allRadioButtons = document.getElementsByName("As");
                     allRadioButtons[0].checked = true;
 
-
+                    function validate_date(){
+                        var dateVal = document.getElementById("date_input").value
+                        if (dateVal == "" || datVal == null){
+                            document.getElementById("dateval").style.visibility ="visible";
+                            return false;
+                        } else {
+                            document.getElementById("dateval").style.visibility ="hidden";
+                            return true;
+                        }
+                    }
+                            
                 </script>
 
                 
@@ -266,8 +276,8 @@
                     
                     
                 </script>
-
-                <input type="submit" class="button-primary" value="Submit" />
+                <label id="dateVal" style="color:red;" visible="hidden">Please select a date!</label>
+                <input type="submit" class="button-primary" onclick="return validate_date();" value="Submit" />
             </form>
         </div>
     </body>
