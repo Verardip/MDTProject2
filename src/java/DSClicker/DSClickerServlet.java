@@ -276,7 +276,21 @@ public class DSClickerServlet extends HttpServlet {
                 for (int i = 0; i < student.tutorAvailability.get(className).size(); i++) {
                     if (student.tutorAvailability.get(className).get(i).equals(fullTime)) {
                         nextView = "TutorHomeFailure.jsp";
-                        request.setAttribute("studentRequests", studentRequests);
+                        
+                        ArrayList<String> relevantRequests = new ArrayList<>();
+                
+                        Iterator<String> it = studentRequests.iterator();
+                        while(it.hasNext()){
+                            String tempRequest = it.next();
+                            String[] tempRequestData = tempRequest.split(": ");
+                            System.out.println(tempRequest);
+                            
+                            if (student.classesEarnedA.contains(tempRequestData[1])) {
+                            String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
+                            relevantRequests.add(prettyRequest);
+                            }                       
+                        }
+                        request.setAttribute("studentRequests", relevantRequests);
                         request.setAttribute("student", student);
                         RequestDispatcher view = request.getRequestDispatcher(nextView);
                         view.forward(request, response);
@@ -285,7 +299,22 @@ public class DSClickerServlet extends HttpServlet {
             }
 
             System.out.println("Updated availability for " + userName + " and " + className);
-            request.setAttribute("studentRequests", studentRequests);
+            
+            ArrayList<String> relevantRequests = new ArrayList<>();
+
+            Iterator<String> it = studentRequests.iterator();
+            while(it.hasNext()){
+                String tempRequest = it.next();
+                String[] tempRequestData = tempRequest.split(": ");
+                System.out.println(tempRequest);
+
+                if (student.classesEarnedA.contains(tempRequestData[1])) {
+                String prettyRequest = initCaps(tempRequestData[0]) + ": " + tempRequestData[1].replace("_", " ") + ": " + tempRequestData[2];
+                relevantRequests.add(prettyRequest);
+                }                       
+            }
+            
+            request.setAttribute("studentRequests", relevantRequests);
             request.setAttribute("student", student);
             student.updateAvailability(className, fullTime);
             RequestDispatcher view = request.getRequestDispatcher(nextView);
