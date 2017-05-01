@@ -52,17 +52,18 @@
         
     </head>
     <body>
-        <% String studentName = (String)request.getAttribute("studentName2"); %>
+        <% String studentName = (String)request.getAttribute("studentName2");
+           String tutorName = (String)request.getAttribute("tutorName2");
+        %>
         <div class="container">
             <form action="Home" method="GET">
-                <input type="hidden" name="username" value="<%= studentName %>" />
+                <input type="hidden" name="username" value="<%= tutorName %>" />
                 <input type="submit" style="float: right;" class="button" value="Home" name="Home"/><br>
             </form>
         <h2>Great!</h2>
         <p>
             <%  
-                
-                String tutorName = (String)request.getAttribute("tutorName2");
+
                 String className = (String)request.getAttribute("className2");
                 String tutorTime = (String)request.getAttribute("tutorTime2");
 
